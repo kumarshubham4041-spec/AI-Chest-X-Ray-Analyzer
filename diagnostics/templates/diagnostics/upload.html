@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload X-Ray</title>
+</head>
+<body>
+    <h1>AI Pneumonia Detector</h1>
+    <!-- enctype="multipart/form-data" is strictly required for uploading images -->
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Diagnose</button>
+    </form>
+</body>
+</html>

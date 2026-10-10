@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Diagnosis Result</title>
+</head>
+<body>
+    <h1>Diagnosis Complete</h1>
+    
+    <h2>AI Prediction: {{ xray.prediction }}</h2>
+    <p>Uploaded at: {{ xray.uploaded_at }}</p>
+    
+    <!-- This displays the image the user just uploaded -->
+    <img src="{{ xray.image.url }}" alt="Uploaded X-Ray" width="300">
+    
+    <br><br>
+    <a href="{% url 'upload_xray' %}">Scan Another X-Ray</a>
+</body>
+</html>

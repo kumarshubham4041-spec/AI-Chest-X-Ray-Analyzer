@@ -36,5 +36,5 @@ This project bridges the gap between machine learning and web development by wra
     ```Bash
     python manage.py runserver
 5. **Open your browser and navigate to**
-    http://127.0.0.1:8000/
+    http://127.0.0.1:8000
    

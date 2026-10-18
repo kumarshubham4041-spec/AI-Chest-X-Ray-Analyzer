@@ -1,40 +1,54 @@
-# AI-Powered Pneumonia Diagnostic Web App 🩺
+# AI Chest X-Ray Analyzer 🩺
 
-An end-to-end web application that utilizes a fine-tuned deep learning model to detect pneumonia from chest X-ray images in real-time. 
+An end-to-end HealthTech web application that utilizes a fine-tuned deep learning model to detect up to 14 different pulmonary conditions from chest X-ray images, featuring explainable AI (Grad-CAM) and LLM-generated clinical summaries.
 
 ## 🚀 Project Overview
-This project bridges the gap between machine learning and web development by wrapping a custom-trained PyTorch model within a Django web server. It provides a seamless, user-friendly interface for uploading medical images and receiving instant diagnostic predictions.
+This project bridges the gap between machine learning and medical web applications. By wrapping a custom PyTorch computer vision model and a local Large Language Model (LLM) within a Django web server, it provides a seamless, user-friendly interface for uploading medical images, visualizing AI decision-making, and receiving readable diagnostic reports.
 
 ### Key Features:
-* **Binary Classification:** Accurately classifies chest X-rays as either *Normal* or *Pneumonia*.
-* **Custom AI Architecture:** Utilizes a ResNet18 convolutional neural network (CNN), fine-tuned specifically for medical image analysis.
-* **Full-Stack Deployment:** Integrated the PyTorch model directly into a Django backend with automated tensor transformations and inference routing.
-* **Dynamic UI:** Clean HTML/CSS frontend for image uploads and result rendering.
+* **Multi-Condition Detection:** Analyzes chest X-rays across 14 distinct pathologies (e.g., Infiltration, Cardiomegaly, Effusion) alongside standard "Normal" classifications.
+* **Explainable AI (Grad-CAM):** Automatically generates heatmaps over the uploaded X-ray to highlight the specific structural features driving the AI's prediction.
+* **LLM Clinical Summaries:** Integrates a local Llama 3.2 model to dynamically translate raw probability scores into professional, easy-to-read clinical interpretations with appropriate medical guardrails.
+* **Full-Stack Deployment:** Integrated the PyTorch CV model and Ollama API directly into a Django backend with a modern, polished HTML/CSS frontend dashboard.
 
 ## 🛠️ Tech Stack
 * **Backend:** Python, Django
-* **Machine Learning:** PyTorch, Torchvision
-* **Image Processing:** Pillow (PIL)
-* **Frontend:** HTML5
+* **Computer Vision:** PyTorch, Torchvision (ResNet architecture)
+* **Generative AI:** Ollama (Llama 3.2)
+* **Image Processing:** Pillow (PIL), NumPy
+* **Frontend:** HTML5, Custom CSS (Inter font)
 
 ## ⚙️ How to Run Locally
 
 1. **Clone the repository:**
+   ```bash
+   git clone [https://github.com/kumarshubham4041-spec/ai-chest-xray-analyzer.git] (https://github.com/kumarshubham4041-spec/ai-chest-xray-analyzer.git)
+   cd ai-chest-xray-analyzer
+2.**Create and activate a virtual environment:**
+  ```bash
+   # Windows
+   python -m venv venv
+   venv\Scripts\activate
+
+   # Mac/Linux
+   python3 -m venv venv
+   source venv/bin/activate
+   ```
+3.**Install dependencies:**
+   ```bash
+   pip install django torch torchvision pillow requests numpy tzdata
+   Start the Local LLM Server:
+  
+```
+4.**Ensure you have Ollama installed on your machine. Open a separate terminal and run:**
    ```Bash
-   git clone [https://github.com/kumarshubham4041-spec/AI-Pneumonia-Diagnostic-App.git](https://github.com/kumarshubham4041-spec/AI-Pneumonia-Diagnostic-App.git)
-   cd AI-Pneumonia-Diagnostic-App
-2. **Create and activate a virtual environment:**
+   ollama run llama3.2
+```
+5.**Run the local Django development server:**
 
-    ```Bash
-    python -m venv venv
-    venv\Scripts\activate
-3. **Install dependencies:**
-    ```Bash
-    pip install django torch torchvision pillow
-
-4. **Run the local development server:**
-    ```Bash
-    python manage.py runserver
-5. **Open your browser and navigate to**
-    http://127.0.0.1:8000
-   
+```Bash
+   python manage.py runserver
+```
+6.**Access the Application:**
+```bash
+   Open your browser and navigate to http://127.0.0.1:8000.

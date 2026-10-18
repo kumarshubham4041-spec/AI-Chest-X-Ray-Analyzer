@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Clinical Analytics Dashboard</title>
+    <!-- Import Chart.js securely from a CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 40px; background-color: #f8f9fa; }
+        .header { display: flex; justify-content: space-between; align-items: center; }
+        .stats-container { display: flex; gap: 20px; margin: 30px 0; }
+        .stat-card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); flex: 1; text-align: center; }
+        .stat-card h2 { margin: 0; font-size: 36px; color: #007bff; }
+        .dashboard-layout { display: flex; gap: 40px; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .chart-section { width: 350px; }
+        .table-section { flex: 1; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        .btn { padding: 10px 20px; background-color: #28a745; color: white; text-decoration: none; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🏥 Hospital AI Analytics</h1>
+        <a href="{% url 'upload_xray' %}" class="btn">New Scan</a>
+    </div>
+
+    <!-- Top Number Cards -->
+    <div class="stats-container">
+        <div class="stat-card">
+            <h3>Total Scans Processed</h3>
+            <h2>{{ total_scans }}</h2>
+        </div>
+        <div class="stat-card">
+            <h3>Pneumonia Cases</h3>
+            <h2 style="color: #dc3545;">{{ pneumonia_count }}</h2>
+        </div>
+        <div class="stat-card">
+            <h3>Normal Cases</h3>
+            <h2 style="color: #28a745;">{{ normal_count }}</h2>
+        </div>
+    </div>
+
+    <!-- Interactive Chart & Recent Scans Table -->
+    <div class="dashboard-layout">
+        <div class="chart-section">
+            <canvas id="diagnosisChart"></canvas>
+        </div>
+        
+        <div class="table-section">
+            <h3>Recent Scans</h3>
+            <table>
+                <tr>
+                    <th>Scan ID</th>
+                    <th>Date</th>
+                    <th>Diagnosis</th>
+                    <th>Confidence</th>
+                </tr>
+                {% for scan in recent_scans %}
+                <tr>
+                    <td>#{{ scan.id }}</td>
+                    <td>{{ scan.uploaded_at|date:"M d, Y H:i" }}</td>
+                    <td style="font-weight: bold; color: {% if scan.prediction == 'Pneumonia' %}#dc3545{% else %}#28a745{% endif %};">{{ scan.prediction }}</td>
+                    <td>{{ scan.confidence }}%</td>
+                </tr>
+                {% empty %}
+                <tr><td colspan="4">No scans processed yet.</td></tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+    <!-- Chart.js Logic -->
+    <script>
+        const ctx = document.getElementById('diagnosisChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Pneumonia', 'Normal'],
+                datasets: [{
+                    data: [{{ pneumonia_count }}, {{ normal_count }}],
+                    backgroundColor: ['#dc3545', '#28a745'],
+                    borderWidth: 1
+                }]
+            },
+            options: { responsive: true, maintainAspectRatio: false }
+        });
+    </script>
+</body>
+</html>
